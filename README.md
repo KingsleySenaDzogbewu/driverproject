@@ -1,16 +1,40 @@
-# React + Vite
+# Driver Project - Monorepo
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a monorepo containing both frontend and backend code for the Driver Project.
 
-Currently, two official plugins are available:
+## Project Structure
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```
+├── frontend/     # Frontend application (React + Vite)
+│   ├── src/      # React components and styles
+│   ├── public/   # Static assets
+│   └── ...
+├── backend/      # Backend application
+│   └── ...
+└── README.md
+```
 
-## React Compiler
+## Frontend
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+The frontend is built with React + Vite and TypeScript. To work on the frontend:
 
-## Expanding the ESLint configuration
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Backend
+
+The backend folder is ready for implementation. Add your backend code here.
+
+## Getting Started
+
+1. Clone the repository
+2. Navigate to either `frontend` or `backend` directory
+3. Follow the specific instructions in each folder's README
+
+## Contributing
+
+- **Frontend developer**: Work in the `frontend/` folder
+- **Backend developer**: Work in the `backend/` folder
