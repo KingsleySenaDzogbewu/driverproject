@@ -1,21 +1,13 @@
 // src/components/StudentProgress.jsx
 import { INITIAL_LESSONS, CATS, QUIZ_HISTORY } from '../data/mockData';
 
-// 1. Define what a Lesson object looks like
-interface LessonItem {
-  id: number;
-  title: string;
-  cat: string;    // Matches l.cat
-  done: boolean;  // Matches l.done
-}
-
-// 2. Define what a Category object looks like
+//  Define what a Category object looks like
 interface CategoryConfig {
   emoji: string;
   color: string;
 }
 
-// 3. Define the shape of the CATS object map
+// Define the shape of the CATS object map
 interface CatsMap {
   [categoryName: string]: CategoryConfig;
 }
