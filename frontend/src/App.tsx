@@ -1,16 +1,24 @@
-// src/App.jsx
+// src/App.tsx
 import { useState } from 'react';
 import AuthPage from './pages/AuthPage';
 import DashboardPage from './pages/DashboardPage';
-import './App.css'; // This imports all your existing styling rules
+import './App.css';
+
+interface UserProfile {
+  id: number;
+  username: string;
+  role: 'ADMIN' | 'DRIVER' | 'COMPANY'; // Enforces that only these specific roles exist
+}
+
+// Define the exact pages the app is allowed to navigate to
+type AppPage = 'auth' | 'dashboard';
 
 export default function App() {
-  // Replace your old "state.page" logic with React state
-  const [user, setUser] = useState(null);
-  const [page, setPage] = useState('auth'); // 'auth' or 'dashboard'
+  const [user, setUser] = useState<UserProfile | null>(null); // Can be a UserProfile object OR null
+  const [page, setPage] = useState<AppPage>('auth');          // Can ONLY be 'auth' or 'dashboard'
 
-  // Function to handle clean programmatic logins
-  const handleLogin = (userData) => {
+  // Enforce that userData MUST match the backend's UserProfile contract
+  const handleLogin = (userData: UserProfile) => {
     setUser(userData);
     setPage('dashboard');
   };
@@ -25,6 +33,7 @@ export default function App() {
       {page === 'auth' ? (
         <AuthPage onLogin={handleLogin} />
       ) : (
+        
         <DashboardPage user={user} onLogout={handleLogout} />
       )}
     </div>
