@@ -11,8 +11,7 @@ export default function LessonPlayer({ activeLessonId, setPage, setActiveQuizId 
   
   const cat = CATS[l.cat] || { bg: '#eee', color: '#000', emoji: '📚' };
 
-  // 3. Mark Done locally simulation handler 
-    // 3. Mark Done locally simulation handler
+  // 3. Mark Done locally simulation handler
   const handleMarkDone = () => {
     // Locate the item directly in the array instead of using the local 'l' variable
     const targetLesson = INITIAL_LESSONS.find(x => x.id === activeLessonId);
