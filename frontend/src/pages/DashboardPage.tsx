@@ -15,8 +15,7 @@ import AdminDash from '../components/AdminDash';
 import AdminAuditLog from '../components/AdminAuditLog';
 
 // 1. Define all the allowed sub-page routes across your system dashboard hubs
-type DashboardSubPage = 
-
+export type DashboardSubPage = 
 
   | 'dashboard' | 'lessons' | 'lesson-player' | 'quiz' | 'progress' | 'schedule' | 'ai-tutor'
   | 'inst-dash' | 'manage-lessons' | 'manage-quizzes' | 'manage-schedule'

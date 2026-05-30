@@ -1,12 +1,8 @@
 // src/components/StudentDash.jsx
+
 import { INITIAL_LESSONS, SCHEDULES, CATS } from '../data/mockData';
-
+import { DashboardSubPage } from '../pages/DashboardPage';
 // 1. Mirror the allowed sub-page navigation types from your router parent
-type DashboardSubPage = 
-
-  | 'dashboard' | 'lessons' | 'lesson-player' | 'quiz' | 'progress' | 'schedule' | 'ai-tutor'
-  | 'inst-dash' | 'manage-lessons' | 'manage-quizzes' | 'manage-schedule'
-  | 'admin-dash' | 'admin-users' | 'admin-content' | 'admin-audit';
 
 // 2. Define the structural rule for incoming user objects
 interface UserProfile {
