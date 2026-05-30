@@ -1,7 +1,28 @@
 // src/components/StudentDash.jsx
 import { INITIAL_LESSONS, SCHEDULES, CATS } from '../data/mockData';
 
-export default function StudentDash({ user, setPage, setActiveLessonId }) {
+// 1. Mirror the allowed sub-page navigation types from your router parent
+type DashboardSubPage = 
+
+  | 'dashboard' | 'lessons' | 'lesson-player' | 'quiz' | 'progress' | 'schedule' | 'ai-tutor'
+  | 'inst-dash' | 'manage-lessons' | 'manage-quizzes' | 'manage-schedule'
+  | 'admin-dash' | 'admin-users' | 'admin-content' | 'admin-audit';
+
+// 2. Define the structural rule for incoming user objects
+interface UserProfile {
+  id: number | string;
+  name: string;
+  role: string;
+}
+
+// 3. Define the strict interface contract matching your function arguments
+interface StudentDashProps {
+  user: UserProfile;
+  setPage: (page: DashboardSubPage) => void;
+  setActiveLessonId: (id: number) => void;
+}
+
+export default function StudentDash({ user, setPage, setActiveLessonId }: StudentDashProps) {
   const done = INITIAL_LESSONS.filter(l => l.done).length;
   const readiness = Math.round((done / INITIAL_LESSONS.length) * 60 + 78 * 0.4);
   const nextSession = SCHEDULES[0];
