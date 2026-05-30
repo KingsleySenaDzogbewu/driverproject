@@ -6,8 +6,8 @@ import './App.css';
 
 interface UserProfile {
   id: number;
-  username: string;
-  role: 'ADMIN' | 'DRIVER' | 'COMPANY'; // Enforces that only these specific roles exist
+  name: string;
+  role: 'student' | 'instructor' | 'admin'; // Enforces that only these specific roles exist
 }
 
 // Define the exact pages the app is allowed to navigate to

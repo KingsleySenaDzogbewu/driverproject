@@ -46,7 +46,7 @@ export default function StudentDash({ user, setPage, setActiveLessonId }) {
           <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '15px', fontWeight: '700', marginBottom: '14px' }}>Next Session</h3>
           {nextSession ? (
             <div style={{ marginBottom: '12px' }}>
-              <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: nextSession.type === 'zoom' ? 'var(--bluebg)' : 'var(--greenbg)', display: 'flex', alignItems: 'center', justifycontent: 'center', fontSize: '20px', marginBottom: '10px' }}>
+              <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: nextSession.type === 'zoom' ? 'var(--bluebg)' : 'var(--greenbg)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px', marginBottom: '10px' }}>
                 {nextSession.type === 'zoom' ? '📹' : '🎥'}
               </div>
               <div style={{ fontWeight: '700', fontSize: '13px', marginBottom: '6px', lineHeight: '1.4' }}>{nextSession.title}</div>

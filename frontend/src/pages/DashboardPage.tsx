@@ -14,22 +14,50 @@ import ManageSchedule from '../components/ManageSchedule';
 import AdminDash from '../components/AdminDash';
 import AdminAuditLog from '../components/AdminAuditLog';
 
+// 1. Define all the allowed sub-page routes across your system dashboard hubs
+type DashboardSubPage = 
 
 
+  | 'dashboard' | 'lessons' | 'lesson-player' | 'quiz' | 'progress' | 'schedule' | 'ai-tutor'
+  | 'inst-dash' | 'manage-lessons' | 'manage-quizzes' | 'manage-schedule'
+  | 'admin-dash' | 'admin-users' | 'admin-content' | 'admin-audit';
 
+interface DashboardPageProps {
+  user: {
+    id: number;
+    name: string;
+    role: 'student' | 'instructor' | 'admin';
+  };
+  onLogout: () => void;
+}
 
-export default function DashboardPage({ user, onLogout }) {
-  const [page, setPage] = useState(user.role === 'instructor' ? 'inst-dash' : user.role === 'admin' ? 'admin-dash' : 'dashboard');
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+export default function DashboardPage({ user, onLogout }: DashboardPageProps) {
+  const [page, setPageState] = useState<DashboardSubPage>(
+    user.role === 'instructor' ? 'inst-dash' : user.role === 'admin' ? 'admin-dash' : 'dashboard'
+  );
+  // Wrapper to normalize incoming page requests from child components
+  // Some children may pass a narrower union that includes 'auth' which isn't
+  // part of DashboardSubPage. Map 'auth' -> 'dashboard' to keep types safe.
+  const setPage = (p: string | DashboardSubPage) => {
+    if (p === 'auth') return setPageState('dashboard');
+    setPageState(p as DashboardSubPage);
+  };
+  const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
   
   // 🔥 FIXED: All React state hooks are grouped here at the top level
-  const [activeLessonId, setActiveLessonId] = useState(null);
-  const [activeQuizId, setActiveQuizId] = useState(1);
+  const [activeLessonId, setActiveLessonId] = useState<number | null>(null);
+  const [activeQuizId, setActiveQuizId] = useState<number>(1);
 
   const rc = user.role === 'instructor' ? '#16a34a' : user.role === 'admin' ? '#d97706' : '#2563eb';
   const initials = user.name ? user.name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase() : '??';
 
-  const getNavItems = (role) => {
+  interface NavItem {
+    id: DashboardSubPage;
+    icon: string;
+    label: string;
+  }
+
+  const getNavItems = (role: 'student' | 'instructor' | 'admin'): NavItem[] => {
     if (role === 'instructor') return [
       { id: 'inst-dash', icon: '◫', label: 'Dashboard' },
       { id: 'manage-lessons', icon: '▶', label: 'Lessons' },
@@ -122,7 +150,7 @@ export default function DashboardPage({ user, onLogout }) {
             <button 
               key={n.id}
               className={`sb-item ${page === n.id ? 'active' : ''}`} 
-              onClick={() => { setPage(n.id); setSidebarOpen(false); }}
+              onClick={() => { setPageState(n.id); setSidebarOpen(false); }}
             >
               <div className="icon">{n.icon}</div>
               {n.label}

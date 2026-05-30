@@ -25,7 +25,7 @@ export default function StudentAiTutor() {
   }, [chatMsgs, chatLoading]);
 
   // Combined function that replaces your old sendChat() and setInput()
-  const handleSendChat = async (textToSend) => {
+  const handleSendChat = async (textToSend?: string) => {
     const input = textToSend || chatInput;
     if (!input.trim() || chatLoading) return;
 
@@ -116,7 +116,7 @@ export default function StudentAiTutor() {
 
         {chatMsgs.length === 1 && (
           <div style={{ padding: '0 16px 12px' }}>
-            <div style={{ fontSize: '11px', color: 'var(--text3)', fontWeight: '600', letterSpacing: '.6px', textTransform: 'uppercase', marginbottom: '8px', marginBottom: '8px' }}>Suggested questions</div>
+            <div style={{ fontSize: '11px', color: 'var(--text3)', fontWeight: '600', letterSpacing: '.6px', textTransform: 'uppercase', marginBottom: '8px' }}>Suggested questions</div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '7px' }}>
               {suggestions.map((s, idx) => (
                 <button key={idx} className="btn btn-secondary btn-sm" onClick={() => handleSendChat(s)} style={{ fontSize: '12px' }}>
