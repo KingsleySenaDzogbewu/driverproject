@@ -1,5 +1,4 @@
 // src/components/StudentDash.jsx
-
 import { INITIAL_LESSONS, SCHEDULES, CATS } from '../data/mockData';
 import { DashboardSubPage } from '../pages/DashboardPage';
 // 1. Mirror the allowed sub-page navigation types from your router parent
