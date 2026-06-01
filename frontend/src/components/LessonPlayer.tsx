@@ -1,7 +1,14 @@
 import { useState } from 'react';
 import { INITIAL_LESSONS, CATS } from '../data/mockData';
+import { DashboardSubPage } from '../pages/DashboardPage';
 
-export default function LessonPlayer({ activeLessonId, setPage, setActiveQuizId }) {
+interface LessonPlayerProps {
+  activeLessonId: number|null;
+  setPage: (page: DashboardSubPage) => void;
+  setActiveQuizId: (id: number) => void;
+}
+
+export default function LessonPlayer({ activeLessonId, setPage, setActiveQuizId }: LessonPlayerProps) {
   // 1. Local state for notes textarea tracking
   const [notes, setNotes] = useState('');
 
