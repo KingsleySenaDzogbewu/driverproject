@@ -1,7 +1,14 @@
 import { useState } from 'react';
 import { QUIZZES, INITIAL_LESSONS } from '../data/mockData';
+import { DashboardSubPage } from '../pages/DashboardPage';
 
-export default function QuizSystem({ activeQuizId, setActiveQuizId, setPage }) {
+interface QuizSystemProps {
+  activeQuizId: number|null;
+  setActiveQuizId: (id: number) => void;
+  setPage: (page: DashboardSubPage) => void;
+}
+
+export default function QuizSystem({ activeQuizId, setActiveQuizId, setPage }: QuizSystemProps) {
   // 1. Grouped Local Reactive States mirroring your engine object schema
   const [quizStep, setQuizStep] = useState(0);
   const [quizSelected, setQuizSelected] = useState(null);
