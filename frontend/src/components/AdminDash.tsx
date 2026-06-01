@@ -1,7 +1,12 @@
-// src/components/AdminDash.jsx
+// src/components/AdminDash.tsx
 import { INITIAL_LESSONS, STUDENTS_DATA, SCHEDULES, AUDIT_LOG } from '../data/mockData';
+import { DashboardSubPage } from '../pages/DashboardPage';
 
-export default function AdminDash({ setPage }) {
+interface AdminDashProps {
+  setPage: (page: DashboardSubPage) => void;
+}
+
+export default function AdminDash({ setPage }: AdminDashProps) {
   const typeColors = { auth: 'var(--blue)', lesson: 'var(--green)', quiz: 'var(--amber)', schedule: '#7c3aed', security: 'var(--red)' };
 
   return (
@@ -98,7 +103,14 @@ export default function AdminDash({ setPage }) {
   );
 }
 
-function StatCard({ icon, label, val, color }) {
+interface StatCardProps {
+  icon: string;
+  label: string;
+  val: string | number;
+  color: string;
+}
+
+function StatCard({ icon, label, val, color }: StatCardProps) {
   return (
     <div className="card stat-card">
       <div className="stat-icon">{icon}</div>
