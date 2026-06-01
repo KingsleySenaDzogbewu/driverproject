@@ -1,4 +1,4 @@
-// src/components/AdminAuditLog.jsx
+// src/components/AdminAuditLog.tsx
 import { AUDIT_LOG } from '../data/mockData';
 
 export default function AdminAuditLog() {
