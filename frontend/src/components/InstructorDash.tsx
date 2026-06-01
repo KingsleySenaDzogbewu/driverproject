@@ -1,4 +1,4 @@
-// src/components/InstructorDash.jsx
+// src/components/InstructorDash.tsx
 import { INITIAL_LESSONS, STUDENTS_DATA, SCHEDULES } from '../data/mockData';
 
 export default function InstructorDash() {
@@ -82,8 +82,14 @@ export default function InstructorDash() {
   );
 }
 
-// Reusable structural helpers placed outside rendering body block loop frame
-function StatCard({ icon, label, val, color }) {
+interface StatCardProps {
+  icon: string;
+  label: string;
+  val: string | number;
+  color: string;
+}
+
+function StatCard({ icon, label, val, color }: StatCardProps) {
   return (
     <div className="card stat-card">
       <div className="stat-icon">{icon}</div>
