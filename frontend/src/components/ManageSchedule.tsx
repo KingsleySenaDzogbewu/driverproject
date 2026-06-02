@@ -1,4 +1,4 @@
-// src/components/ManageSchedule.jsx
+// src/components/ManageSchedule.tsx
 import { useState } from 'react';
 import { SCHEDULES } from '../data/mockData';
 

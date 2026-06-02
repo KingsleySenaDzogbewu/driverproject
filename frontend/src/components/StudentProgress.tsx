@@ -1,4 +1,4 @@
-// src/components/StudentProgress.jsx
+// src/components/StudentProgress.tsx
 import { INITIAL_LESSONS, CATS, QUIZ_HISTORY } from '../data/mockData';
 
 //  Define what a Category object looks like

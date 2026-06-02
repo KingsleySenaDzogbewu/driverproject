@@ -1,4 +1,4 @@
-// src/pages/DashboardPage.jsx
+// src/pages/DashboardPage.tsx
 import { useState } from 'react';
 import StudentDash from '../components/StudentDash';
 import LessonsList from '../components/LessonsList';
@@ -14,7 +14,7 @@ import ManageSchedule from '../components/ManageSchedule';
 import AdminDash from '../components/AdminDash';
 import AdminAuditLog from '../components/AdminAuditLog';
 
-// 1. Define all the allowed sub-page routes across your system dashboard hubs
+// 1. Defines all the allowed sub-page routes across your system dashboard hubs
 export type DashboardSubPage = 
 
   | 'dashboard' | 'lessons' | 'lesson-player' | 'quiz' | 'progress' | 'schedule' | 'ai-tutor'
@@ -35,8 +35,6 @@ export default function DashboardPage({ user, onLogout }: DashboardPageProps) {
     user.role === 'instructor' ? 'inst-dash' : user.role === 'admin' ? 'admin-dash' : 'dashboard'
   );
   // Wrapper to normalize incoming page requests from child components
-  // Some children may pass a narrower union that includes 'auth' which isn't
-  // part of DashboardSubPage. Map 'auth' -> 'dashboard' to keep types safe.
   const setPage = (p: string | DashboardSubPage) => {
     if (p === 'auth') return setPageState('dashboard');
     setPageState(p as DashboardSubPage);
@@ -81,9 +79,6 @@ export default function DashboardPage({ user, onLogout }: DashboardPageProps) {
 
   const navItems = getNavItems(user.role);
 
-  // 🔥 FIXED: Clean, singular router switch block
-    // This should be your single, clean renderPage function
-   // 3. Drop your mounted components inside the switch tree
    const renderPage = () => {
     switch (page) {
       case 'dashboard':      
@@ -111,15 +106,13 @@ export default function DashboardPage({ user, onLogout }: DashboardPageProps) {
       case 'manage-schedule':
         return <ManageSchedule />;
       
-      // 🎯 ADMIN VIEWPORTS ARE NOW LIVE HERE:
-            // Inside DashboardPage.jsx -> renderPage() switch tree:
       case 'admin-dash':     
         return <AdminDash setPage={setPage} />;
       case 'admin-users':    
         return <AdminDash setPage={setPage} />; 
-// Maps to your admin user overview dashboard natively
+
       case 'admin-content':  
-        return <ManageLessons />; // Reuses your content manager block layout
+        return <ManageLessons />; 
       case 'admin-audit':    
         return <AdminAuditLog />;
       
@@ -127,8 +120,6 @@ export default function DashboardPage({ user, onLogout }: DashboardPageProps) {
         return <StudentDash user={user} setPage={setPage} setActiveLessonId={setActiveLessonId} />;
     }
   };
-
-
 
 
   return (

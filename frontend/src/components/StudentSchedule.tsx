@@ -1,4 +1,4 @@
-// src/components/StudentSchedule.jsx
+// src/components/StudentSchedule.tsx
 import { SCHEDULES } from '../data/mockData';
 
 export default function StudentSchedule() {

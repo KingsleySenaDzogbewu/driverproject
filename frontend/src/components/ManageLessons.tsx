@@ -1,4 +1,4 @@
-// src/components/ManageLessons.jsx
+// src/components/ManageLessons.tsx
 import { useState } from 'react';
 import { INITIAL_LESSONS, CATS } from '../data/mockData';
 
