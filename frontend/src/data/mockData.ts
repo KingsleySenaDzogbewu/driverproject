@@ -1,4 +1,4 @@
-// src/data/mockData.js
+// src/data/mockData.ts
 export const USERS = {
   'student@demo.com':  {id:'s1',name:'Kwame Asante',email:'student@demo.com',password:'demo123',role:'student'},
   'instructor@demo.com':{id:'i1',name:'Kofi Mensah',email:'instructor@demo.com',password:'demo123',role:'instructor'},

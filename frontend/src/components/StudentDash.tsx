@@ -1,4 +1,4 @@
-// src/components/StudentDash.jsx
+// src/components/StudentDash.tsx
 import { INITIAL_LESSONS, SCHEDULES, CATS } from '../data/mockData';
 import { DashboardSubPage } from '../pages/DashboardPage';
 // 1. Mirror the allowed sub-page navigation types from your router parent
@@ -37,10 +37,10 @@ export default function StudentDash({ user, setPage, setActiveLessonId }: Studen
 
       {/* Numerical Metrics Matrix */}
       <div className="grid-4 anim-fadeup d1" style={{ marginBottom: '20px' }}>
-        <StatCard icon="📚" label="Lessons Done" val={`${done} / ${INITIAL_LESSONS.length}`} color="var(--blue)" />
-        <StatCard icon="🧠" label="Quiz Average" val="78%" color="var(--green)" />
-        <StatCard icon="🎯" label="Readiness" val={`${readiness}%`} color={readiness >= 70 ? 'var(--green)' : readiness >= 50 ? 'var(--amber)' : 'var(--red)'} />
-        <StatCard icon="📅" label="Sessions" val={SCHEDULES.length} color="#7c3aed" />
+        <StatCard icon="" label="Lessons Done" val={`${done} / ${INITIAL_LESSONS.length}`} color="var(--blue)" />
+        <StatCard icon="" label="Quiz Average" val="78%" color="var(--green)" />
+        <StatCard icon="" label="Readiness" val={`${readiness}%`} color={readiness >= 70 ? 'var(--green)' : readiness >= 50 ? 'var(--amber)' : 'var(--red)'} />
+        <StatCard icon="" label="Sessions" val={SCHEDULES.length} color="#7c3aed" />
       </div>
 
       {/* Main Splitting Columns Layout row */}
@@ -101,9 +101,6 @@ export default function StudentDash({ user, setPage, setActiveLessonId }: Studen
   );
 }
 
-// ════════════════════════════════════════════════════
-// PURE REUSABLE HELPERS (OUTSIDE MAIN COMPONENT RENDER)
-// ════════════════════════════════════════════════════
 
 function StatCard({ icon, label, val, color }) {
   return (

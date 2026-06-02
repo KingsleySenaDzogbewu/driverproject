@@ -14,7 +14,6 @@ interface QuizzesMap {
   [lessonId: string]: QuizQuestion[];
 }
 
-
 export default function ManageQuizzes() {
   return (
     <div style={{ padding: '24px' }}>
