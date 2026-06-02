@@ -139,7 +139,7 @@ select.input{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xml
 .auth-tab{flex:1;padding:8px;border-radius:6px;border:none;font-family:var(--font-display);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s}
 .auth-tab.active{background:var(--blue);color:#fff;box-shadow:0 2px 8px rgba(37,99,235,.4)}
 .auth-tab:not(.active){background:transparent;color:#6b7280}
-.auth-input{width:92%;padding:11px 14px;border-radius:var(--radius-sm);border:1.5px solid rgba(255,255,255,.1);background:rgba(255,255,255,.06);font-size:14px;color:#fff;font-family:var(--font-body);transition:border-color .15s;margin-bottom:12px}
+.auth-input{width:100%;padding:11px 14px;border-radius:var(--radius-sm);border:1.5px solid rgba(255,255,255,.1);background:rgba(255,255,255,.06);font-size:14px;color:#fff;font-family:var(--font-body);transition:border-color .15s;margin-bottom:12px}
 .auth-input::placeholder{color:#4b5563}
 .auth-input:focus{border-color:var(--blue2);background:rgba(255,255,255,.08)}
 .auth-select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
@@ -244,3 +244,8 @@ select.input{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xml
   .sidebar-overlay.show{display:block}
 }
 
+.auth-link {
+  color: #2563eb;
+  cursor: pointer;
+  text-decoration: underline;
+}

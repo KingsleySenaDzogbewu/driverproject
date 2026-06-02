@@ -1,4 +1,4 @@
-// src/pages/AuthPage.jsx
+// src/pages/AuthPage.tsx
 import { useState } from 'react';
 import { USERS } from '../data/mockData';
 
@@ -51,13 +51,6 @@ export default function AuthPage({ onLogin }) {
     }, 600);
   };
 
-  // 3. Quick Login Pill Click Handler
-  const quickLogin = (role) => {
-    if (role === 'student') onLogin(USERS['student@demo.com']);
-    if (role === 'instructor') onLogin(USERS['instructor@demo.com']);
-    if (role === 'admin') onLogin(USERS['admin@demo.com']);
-  };
-
   return (
     <div 
     id="auth-screen"
@@ -84,20 +77,6 @@ export default function AuthPage({ onLogin }) {
 
         {/* Card Form Element Blocks */}
         <div className="auth-card">
-          <div className="auth-tabs">
-            <button 
-              className={`auth-tab ${authTab === 'login' ? 'active' : ''}`} 
-              onClick={() => setAuthTab('login')}
-            >
-              Sign In
-            </button>
-            <button 
-              className={`auth-tab ${authTab === 'register' ? 'active' : ''}`} 
-              onClick={() => setAuthTab('register')}
-            >
-              Register
-            </button>
-          </div>
 
           {/* Conditional Name Field for Register Layout */}
           {authTab === 'register' && (
@@ -159,13 +138,11 @@ export default function AuthPage({ onLogin }) {
 
         {/* Quick Access Action Grid Footer */}
         <div style={{ marginTop: '20px' }}>
-          <div style={{ textAlign: 'center', fontSize: '11px', color: '#4b5563', fontWeight: '600', letterSpacing: '.8px', textTransform: 'uppercase', marginBottom: '12px' }}>
-            Quick demo access
-          </div>
-          <div className="demo-pills">
-            <div className="demo-pill" onClick={() => quickLogin('student')}><span>🎓</span>Student</div>
-            <div className="demo-pill" onClick={() => quickLogin('instructor')}><span>📋</span>Instructor</div>
-            <div className="demo-pill" onClick={() => quickLogin('admin')}><span>⚙️</span>Admin</div>
+          <div style={{ textAlign: 'center', fontSize: '11px', color: '#4b5563', fontWeight: '600', letterSpacing: '.8px', marginBottom: '12px' }}>
+            {authTab === 'login' ? 'Don\'t have an account?' : 'Already have an account?'}{' '}
+            <span className="auth-link" onClick={() => setAuthTab(authTab === 'login' ? 'register' : 'login')}>
+              {authTab === 'login' ? 'Register' : 'Sign In'}
+            </span>
           </div>
         </div>
 
