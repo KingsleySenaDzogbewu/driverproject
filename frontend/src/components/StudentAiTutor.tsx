@@ -1,4 +1,4 @@
-// src/components/StudentAiTutor.jsx
+// src/components/StudentAiTutor.tsx
 import { useState, useEffect, useRef } from 'react';
 
 export default function StudentAiTutor() {
@@ -24,7 +24,6 @@ export default function StudentAiTutor() {
     }
   }, [chatMsgs, chatLoading]);
 
-  // Combined function that replaces your old sendChat() and setInput()
   const handleSendChat = async (textToSend?: string) => {
     const input = textToSend || chatInput;
     if (!input.trim() || chatLoading) return;
@@ -38,13 +37,13 @@ export default function StudentAiTutor() {
     setChatLoading(true);
 
     try {
-      // NOTE: In production, you should route this through your backend server 
-      // to keep your private Anthropic API key completely secure.
+      // NOTE: this would be routed through the backend server 
+
       const res = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          // 'X-API-Key': 'YOUR_ANTHROPIC_API_KEY' // Put your real key here later
+          // 'X-API-Key': 'YOUR_ANTHROPIC_API_KEY' // Put my real key here later
         },
         body: JSON.stringify({
           model: 'claude-3-5-sonnet-20241022',
