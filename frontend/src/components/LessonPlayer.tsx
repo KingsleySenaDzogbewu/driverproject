@@ -1,6 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { INITIAL_LESSONS, CATS } from '../data/mockData';
 import { DashboardSubPage } from '../pages/DashboardPage';
+import {
+  addLessonQuestion,
+  getLessonNotes,
+  getLessonQuestions,
+  LessonQuestion,
+  saveLessonNotes,
+} from '../services/lessonNotesService';
 
 interface LessonPlayerProps {
   activeLessonId: number|null;
@@ -9,8 +16,21 @@ interface LessonPlayerProps {
 }
 
 export default function LessonPlayer({ activeLessonId, setPage, setActiveQuizId }: LessonPlayerProps) {
-  // 1. Local state for notes textarea tracking
   const [notes, setNotes] = useState('');
+  const [questionText, setQuestionText] = useState('');
+  const [lessonQuestions, setLessonQuestions] = useState<LessonQuestion[]>([]);
+  const [noteSaved, setNoteSaved] = useState(false);
+  const [questionError, setQuestionError] = useState('');
+
+  useEffect(() => {
+    if (activeLessonId !== null) {
+      setNotes(getLessonNotes(activeLessonId));
+      setLessonQuestions(getLessonQuestions(activeLessonId));
+      setNoteSaved(false);
+      setQuestionText('');
+      setQuestionError('');
+    }
+  }, [activeLessonId]);
 
   // 2. Find current dynamic active lesson object reference
   const l = INITIAL_LESSONS.find(x => x.id === activeLessonId);
@@ -28,6 +48,28 @@ export default function LessonPlayer({ activeLessonId, setPage, setActiveQuizId 
     setPage('lessons'); // Redirect back to refresh library view
   };
 
+  const handleNotesChange = (value: string) => {
+    setNotes(value);
+    if (activeLessonId !== null) {
+      saveLessonNotes(activeLessonId, value);
+      setNoteSaved(true);
+    }
+  };
+
+  const handleQuestionSubmit = () => {
+    const trimmed = questionText.trim();
+    if (!trimmed) {
+      setQuestionError('Please type your question before sending.');
+      return;
+    }
+
+    if (activeLessonId !== null) {
+      const nextQuestions = addLessonQuestion(activeLessonId, trimmed);
+      setLessonQuestions(nextQuestions);
+      setQuestionText('');
+      setQuestionError('');
+    }
+  };
 
   const startQuiz = () => {
     setActiveQuizId(l.id);
@@ -86,16 +128,64 @@ export default function LessonPlayer({ activeLessonId, setPage, setActiveQuizId 
         {/* Notes and Sidebar Columns */}
         <div>
         <div className="card card-p" style={{ marginBottom: '14px' }}>
-            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '14px', fontWeight: '700', marginBottom: '10px' }}>
-              Lesson Notes
-            </h3>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+              <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '14px', fontWeight: '700' }}>
+                Lesson Notes
+              </h3>
+              {noteSaved && (
+                <span style={{ fontSize: '11px', color: 'var(--green)', opacity: 0.85 }}>
+                  Saved locally
+                </span>
+              )}
+            </div>
             <textarea 
               className="input" 
               style={{ width: '100%', height: '160px', resize: 'vertical', fontSize: '13px', lineHeight: '1.6' }} 
               placeholder="Take notes while you study…"
               value={notes}
-              onChange={(e) => setNotes(e.target.value)}
+              onChange={(e) => handleNotesChange(e.target.value)}
             />
+          </div>
+
+          <div className="card card-p" style={{ marginBottom: '14px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+              <div>
+                <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '14px', fontWeight: '700' }}>
+                  Ask Your Instructor
+                </h3>
+                <div style={{ fontSize: '12px', color: 'var(--text3)', marginTop: '4px' }}>
+                  Submit a quick question if something in the lesson is unclear.
+                </div>
+              </div>
+              <span className="badge" style={{ background: 'rgba(59,130,246,.12)', color: '#1d4ed8', fontSize: '11px', padding: '4px 8px', borderRadius: '999px' }}>
+                {lessonQuestions.length} pending
+              </span>
+            </div>
+            <textarea
+              className="input"
+              style={{ width: '100%', height: '100px', resize: 'vertical', fontSize: '13px', lineHeight: '1.6', marginBottom: '10px' }}
+              placeholder="Type your question for your instructor…"
+              value={questionText}
+              onChange={(e) => setQuestionText(e.target.value)}
+            />
+            {questionError && <div style={{ color: '#dc2626', fontSize: '12px', marginBottom: '8px' }}>{questionError}</div>}
+            <button className="btn btn-secondary btn-sm" onClick={handleQuestionSubmit}>Send Question</button>
+
+            {lessonQuestions.length > 0 && (
+              <div style={{ marginTop: '16px' }}>
+                <div style={{ fontSize: '12px', fontWeight: '700', marginBottom: '10px' }}>Submitted questions</div>
+                <div style={{ display: 'grid', gap: '10px' }}>
+                  {lessonQuestions.map((question, index) => (
+                    <div key={`${question.createdAt}-${index}`} style={{ border: '1px solid var(--gray2)', borderRadius: '10px', padding: '10px', background: 'var(--bg)', fontSize: '13px' }}>
+                      <div style={{ marginBottom: '6px', color: 'var(--text)', lineHeight: '1.4' }}>{question.text}</div>
+                      <div style={{ fontSize: '11px', color: 'var(--text3)' }}>
+                        {new Date(question.createdAt).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })} · {question.status}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="card card-p">

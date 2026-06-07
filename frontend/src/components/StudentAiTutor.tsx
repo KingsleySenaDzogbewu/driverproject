@@ -1,14 +1,16 @@
 // src/components/StudentAiTutor.tsx
 import { useState, useEffect, useRef } from 'react';
+import type { KeyboardEvent } from 'react';
+import { answerTutorQuestion } from '../data/aiTutorData';
 
 export default function StudentAiTutor() {
   const [chatMsgs, setChatMsgs] = useState([
-    { role: 'ai', text: "Hi! I'm your AI driving theory tutor \n\nAsk me anything about road signs, traffic laws, driving safety or vehicle controls. I'll help you pass your theory test!" }
+    { role: 'ai', text: "Hi! I'm your AI driving theory tutor. Ask me anything about road signs, traffic laws, driving safety, or vehicle controls." }
   ]);
   const [chatInput, setChatInput] = useState('');
   const [chatLoading, setChatLoading] = useState(false);
 
-  const chatBodyRef = useRef(null);
+  const chatBodyRef = useRef<HTMLDivElement | null>(null);
 
   const suggestions = [
     'What does a red triangle sign mean?',
@@ -37,41 +39,22 @@ export default function StudentAiTutor() {
     setChatLoading(true);
 
     try {
-      // NOTE: this would be routed through the backend server 
-
-      const res = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          // 'X-API-Key': 'YOUR_ANTHROPIC_API_KEY' // Put my real key here later
-        },
-        body: JSON.stringify({
-          model: 'claude-3-5-sonnet-20241022',
-          max_tokens: 1000,
-          system: 'You are an expert driving theory tutor. Answer questions about road signs, traffic laws, driving safety and vehicle controls clearly and concisely. Keep answers under 120 words. Be encouraging.',
-          messages: updatedHistory.map(m => ({
-            role: m.role === 'ai' ? 'assistant' : 'user',
-            content: m.text
-          }))
-        })
+        // In this prototype, the AI tutor is simulated locally using built-in driving theory knowledge.
+      const reply = await new Promise<string>((resolve) => {
+        window.setTimeout(() => resolve(answerTutorQuestion(input)), 300);
       });
-
-      const data = await res.json();
-      const reply = data.content?.[0]?.text || "Sorry, I couldn't get a response. Please try again.";
-      
       setChatMsgs(prev => [...prev, { role: 'ai', text: reply }]);
-    } catch  {
-      // Clean fallback if API drops, key is missing, or CORS blocks it
+    } catch {
       setChatMsgs(prev => [...prev, { 
         role: 'ai', 
-        text: 'Connection error / Missing API Configuration setup. Please check your network or connect a backend relay!' 
+        text: 'Something went wrong while generating a response. Please try again.' 
       }]);
     } finally {
       setChatLoading(false);
     }
   };
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSendChat();
@@ -82,7 +65,7 @@ export default function StudentAiTutor() {
     <div className="anim-fadeup" style={{ height: 'calc(100vh - 100px)', display: 'flex', flexDirection: 'column', padding: '24px' }}>
       <div className="ph" style={{ flexShrink: 0 }}>
         <div className="ph-title">AI Tutor ✧</div>
-        <div className="ph-sub">Powered by Claude — ask anything about driving theory</div>
+        <div className="ph-sub">A simulated tutor using built-in driving theory guidance. Ask about road signs, traffic laws, safety, or vehicle controls.</div>
       </div>
 
       <div className="card" style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', padding: 0, minHeight: 0 }}>

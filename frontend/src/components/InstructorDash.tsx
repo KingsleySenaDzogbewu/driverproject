@@ -1,7 +1,11 @@
 // src/components/InstructorDash.tsx
 import { INITIAL_LESSONS, STUDENTS_DATA, SCHEDULES } from '../data/mockData';
 
-export default function InstructorDash() {
+interface InstructorDashProps {
+  setPage: (page: string) => void;
+}
+
+export default function InstructorDash({ setPage }: InstructorDashProps) {
   return (
     <div style={{ padding: '24px' }}>
       <div className="ph anim-fadeup">
@@ -76,6 +80,20 @@ export default function InstructorDash() {
               <div style={{ fontSize: '11px', color: 'var(--text3)' }}>{s.date} · {s.time}</div>
             </div>
           ))}
+        </div>
+      </div>
+
+      <div className="card anim-fadeup" style={{ marginTop: '22px', padding: '22px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', gap: '16px', alignItems: 'center' }}>
+          <div>
+            <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, marginBottom: '8px' }}>Share Your Live Location</div>
+            <div style={{ fontSize: '13px', color: 'var(--text3)' }}>
+              Open your next student session and share your location so the student can track you in real time.
+            </div>
+          </div>
+          <button className="btn btn-primary btn-sm" onClick={() => setPage('instructor-practical-lessons')}>
+            Go to Practical Lessons
+          </button>
         </div>
       </div>
     </div>

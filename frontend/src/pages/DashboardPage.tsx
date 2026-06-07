@@ -8,17 +8,20 @@ import StudentProgress from '../components/StudentProgress';
 import StudentSchedule from '../components/StudentSchedule';
 import StudentAiTutor from '../components/StudentAiTutor';
 import InstructorDash from '../components/InstructorDash';
+import InstructorPracticalLessons from '../components/InstructorPracticalLessons';
 import ManageLessons from '../components/ManageLessons';
 import ManageQuizzes from '../components/ManageQuizzes';
 import ManageSchedule from '../components/ManageSchedule';
 import AdminDash from '../components/AdminDash';
 import AdminAuditLog from '../components/AdminAuditLog';
+import PracticalLessons from '../components/PracticalLessons';
+import PracticalLessonsDetails from '../components/PracticalLessonsDetails';
 
 // 1. Defines all the allowed sub-page routes across your system dashboard hubs
 export type DashboardSubPage = 
 
-  | 'dashboard' | 'lessons' | 'lesson-player' | 'quiz' | 'progress' | 'schedule' | 'ai-tutor'
-  | 'inst-dash' | 'manage-lessons' | 'manage-quizzes' | 'manage-schedule'
+  | 'dashboard' | 'lessons' | 'lesson-player' | 'quiz' | 'progress' | 'schedule' | 'practical-lessons' | 'practical-lessons-details' | 'ai-tutor'
+  | 'inst-dash' | 'instructor-practical-lessons' | 'manage-lessons' | 'manage-quizzes' | 'manage-schedule'
   | 'admin-dash' | 'admin-users' | 'admin-content' | 'admin-audit';
 
 interface DashboardPageProps {
@@ -50,13 +53,14 @@ export default function DashboardPage({ user, onLogout }: DashboardPageProps) {
 
   interface NavItem {
     id: DashboardSubPage;
-    icon: string;
+    icon?: string;
     label: string;
   }
 
   const getNavItems = (role: 'student' | 'instructor' | 'admin'): NavItem[] => {
     if (role === 'instructor') return [
       { id: 'inst-dash', icon: '◫', label: 'Dashboard' },
+      { id: 'instructor-practical-lessons', icon: '🚗', label: 'Practical Lessons' },
       { id: 'manage-lessons', icon: '▶', label: 'Lessons' },
       { id: 'manage-quizzes', icon: '✦', label: 'Quizzes' },
       { id: 'manage-schedule', icon: '◷', label: 'Schedule' },
@@ -73,6 +77,7 @@ export default function DashboardPage({ user, onLogout }: DashboardPageProps) {
       { id: 'quiz', icon: '✦', label: 'Quizzes' },
       { id: 'progress', icon: '◎', label: 'Progress' },
       { id: 'schedule', icon: '◷', label: 'Schedule' },
+      { id: 'practical-lessons', label: 'Practical Lessons' },
       { id: 'ai-tutor', icon: '✧', label: 'AI Tutor' },
     ];
   };
@@ -93,14 +98,21 @@ export default function DashboardPage({ user, onLogout }: DashboardPageProps) {
         return <StudentProgress setActiveLessonId={setActiveLessonId} setPage={setPage} />;
       case 'schedule':       
         return <StudentSchedule />;
+      case 'practical-lessons': 
+        return <PracticalLessons user={user} setPage={setPage} setActiveLessonId={setActiveLessonId} />;
+      case 'practical-lessons-details':
+        return <PracticalLessonsDetails user={user} lessonId={activeLessonId} setPage={setPage} />;
       case 'ai-tutor':       
         return <StudentAiTutor />;
       
+      
       // Instructor Viewports
       case 'inst-dash':      
-        return <InstructorDash />;
+        return <InstructorDash setPage={setPage} />;
+      case 'instructor-practical-lessons':
+        return <InstructorPracticalLessons user={user} setPage={setPage} setActiveLessonId={setActiveLessonId} />;
       case 'manage-lessons': 
-        return <ManageLessons />;
+        return <ManageLessons setPage={setPage} setActiveLessonId={setActiveLessonId} role={user.role} />;
       case 'manage-quizzes': 
         return <ManageQuizzes />;
       case 'manage-schedule':

@@ -123,7 +123,7 @@ export default function StudentProgress({ setActiveLessonId, setPage }) {
 }
 
 // Global UI Layout Helpers placed outside component block to protect runtime loop rendering
-function StatCard({ icon, label, val, color }) {
+function StatCard({ icon, label, val, color }: { icon?: string; label: string; val: string | number; color: string }) {
   return (
     <div className="card stat-card">
       <div className="stat-icon">{icon}</div>

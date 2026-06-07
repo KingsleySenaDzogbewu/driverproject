@@ -62,9 +62,77 @@ export const QUIZ_HISTORY = [
   {lesson:'Driving Safety',score:68,date:'1 week ago'},
 ];
 
+export const SCHOOL_LOCATION = {
+  name: 'DriveLearn School',
+  lat: 5.6500,
+  lng: -0.1560,
+};
+
+export interface PracticalLesson {
+  id: number;
+  studentId: number;
+  instructorName: string;
+  vehicleName: string;
+  date: string;
+  time: string;
+  duration: string;
+  pickupLocation: string;
+  siteName: string;
+  siteLat: number;
+  siteLng: number;
+  status: 'upcoming' | 'completed' | 'cancelled';
+  route?: [number, number][];
+}
+
 export const CATS = {
   'Road Signs':     {color:'#2563eb',bg:'#eff6ff',emoji:'🚦'},
   'Traffic Laws':   {color:'#16a34a',bg:'#f0fdf4',emoji:'⚖️'},
   'Driving Safety': {color:'#d97706',bg:'#fffbeb',emoji:'🛡️'},
   'Vehicle Controls':{color:'#7c3aed',bg:'#f5f3ff',emoji:'🎛️'},
 };
+
+export const PRACTICAL_LESSONS: PracticalLesson[] = [
+  {
+    id: 1,
+    studentId: 1,
+    instructorName: "Kofi Mensah",
+    vehicleName: "Toyota Corolla",
+    date: "2026-06-15",
+    time: "14:00",
+    duration: "2 Hours",
+    pickupLocation: "Madina",
+    siteName: "Madina Training Zone",
+    siteLat: 5.6492,
+    siteLng: -0.1546,
+    status: "upcoming",
+    route: [
+      [5.6500, -0.1560],
+      [5.6499, -0.1554],
+      [5.6497, -0.1550],
+      [5.6495, -0.1548],
+      [5.6492, -0.1546],
+    ],
+  },
+
+  {
+    id: 2,
+    studentId: 1,
+    instructorName: "Kofi Mensah",
+    vehicleName: "Toyota Corolla",
+    date: "2026-06-08",
+    time: "14:00",
+    duration: "2 Hours",
+    pickupLocation: "Madina",
+    siteName: "Madina Training Zone",
+    siteLat: 5.6492,
+    siteLng: -0.1546,
+    status: "completed",
+    route: [
+      [5.6500, -0.1560],
+      [5.6499, -0.1554],
+      [5.6497, -0.1550],
+      [5.6495, -0.1548],
+      [5.6492, -0.1546],
+    ],
+  },
+];
