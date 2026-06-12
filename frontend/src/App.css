@@ -379,3 +379,290 @@ select.input{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xml
   text-align: center !important;     /* Centers multi-line labels */
 }
 
+/* Instructor Core Grid Wrapper */
+.responsive-instructor-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr; /* Default: Stacks components on top of each other on mobile */
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+}
+
+/* Location Card Action Flex Splitter */
+.responsive-location-row {
+  display: flex;
+  flex-direction: column; /* Default: Stacks the location message above the button */
+  gap: 16px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.location-btn {
+  width: 100%; /* Spans full width on mobile screens for easy tapping */
+  justify-content: center;
+}
+
+/* ==========================================================================
+   Desktop Screen Enhancements (768px and up)
+   ========================================================================== */
+@media (min-width: 768px) {
+  .responsive-instructor-grid {
+    grid-template-columns: 3fr 2fr; /* Restores the clean side-by-side design */
+    gap: 20px;
+  }
+
+  .responsive-location-row {
+    flex-direction: row; /* Aligns description left and button right */
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .location-btn {
+    width: auto; /* Restores small padding limits for buttons on PC */
+  }
+}
+
+/* Header Responsive Sizing */
+.responsive-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 12px;
+  width: 100%;
+}
+
+/* Individual Lesson Layout Cards */
+.lesson-manage-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* Middle Description Frame */
+.lesson-text-block {
+  flex: 1;
+  min-width: 0; /* Lets text containers shrink and wrap gracefully */
+}
+
+.lesson-title-text {
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--text1);
+}
+
+.lesson-sub-text {
+  font-size: 11px;
+  color: var(--text3);
+  margin-top: 2px;
+}
+
+/* Right-aligned Operations Panel Container */
+.lesson-actions-block {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0; /* Prevents action tools from folding into zero width space */
+}
+
+/* Form block spanning helper utility */
+@media (max-width: 768px) {
+  .responsive-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .header-action-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .form-full-width {
+    grid-column: span 1 / auto !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .lesson-manage-item {
+    padding: 16px 20px;
+    gap: 14px;
+  }
+  .lesson-title-text {
+    font-size: 14px;
+  }
+  .form-full-width {
+    grid-column: 1 / -1;
+  }
+}
+
+
+/* Quiz Card Component Header Box styles */
+.quiz-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--gray3);
+  gap: 12px;
+}
+
+/* Individual list item wrapper container */
+.quiz-question-row {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--gray2);
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* Options Layout: Stack vertically on mobile, row wrapping on desktop views */
+.quiz-options-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  width: 100%;
+}
+
+.quiz-header-btn, .quiz-edit-btn {
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   Desktop Responsive Adapters (768px and up)
+   ========================================================================== */
+@media (min-width: 768px) {
+  .quiz-card-header {
+    padding: 16px 22px;
+  }
+  
+  .quiz-question-row {
+    padding: 16px 22px;
+    gap: 14px;
+  }
+  
+  .quiz-options-layout {
+    flex-direction: row; /* Switch back to clean horizontal line alignments on PC screens */
+    flex-wrap: wrap;
+  }
+}
+
+
+/* Schedule Parent Responsive Row Wrapper */
+.schedule-manage-item {
+  display: flex;
+  flex-direction: column; /* Default mobile behavior: stack action options below info */
+  align-items: stretch;
+  padding: 14px;
+  gap: 12px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* Row wrapper organizing icon + typography text details */
+.schedule-main-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+/* Middle description text holder */
+.schedule-text-details {
+  flex: 1;
+  min-width: 0; /* Crucial: Allows wide text titles to stay wrapped inside the card boundaries */
+}
+
+.schedule-title-heading {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--text1);
+}
+
+.schedule-meta-row {
+  font-size: 12px;
+  color: var(--text3);
+  margin-top: 4px;
+  display: flex;
+  flex-wrap: wrap; /* Gracefully wraps metadata badges onto new lines if needed */
+  gap: 8px;
+  align-items: center;
+}
+
+.schedule-cancel-btn {
+  width: 100%; /* Expands full width for quick tapping ergonomics on small device screens */
+  justify-content: center;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   Desktop Screen Enhancements (768px and up)
+   ========================================================================== */
+@media (min-width: 768px) {
+  .schedule-manage-item {
+    flex-direction: row; /* Switch layout inline horizontally for desktop layout monitor profiles */
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+  }
+  
+  .schedule-cancel-btn {
+    width: auto; /* Restores standard fit box styling boundaries for desktop */
+  }
+}
+
+/* Core row container holding info and action buttons */
+.responsive-lesson-share-row {
+  display: flex;
+  flex-direction: column; /* Default mobile behavior: stack action button under text details */
+  gap: 14px;
+  align-items: stretch;
+  width: 100%;
+}
+
+.lesson-review-btn {
+  width: 100%; /* Expands full width for clean phone interactions */
+  height: 40px;
+  justify-content: center;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Footer alignment helpers */
+.responsive-back-btn-wrapper {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 480px) {
+  .back-to-dash-btn {
+    width: 100%; /* Makes footer button easy to hit on small screens */
+    justify-content: center;
+  }
+}
+
+/* ==========================================================================
+   Desktop Adapters (768px and up)
+   ========================================================================== */
+@media (min-width: 768px) {
+  .responsive-lesson-share-row {
+    flex-direction: row; /* Restores beautiful horizontal layout on monitors */
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .lesson-review-btn {
+    width: auto; /* Restores tight auto scaling bounding box sizes for desktop profiles */
+  }
+}
+

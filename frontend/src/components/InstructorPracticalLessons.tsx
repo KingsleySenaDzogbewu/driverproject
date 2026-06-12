@@ -19,13 +19,14 @@ export default function InstructorPracticalLessons({ user, setPage, setActiveLes
   );
 
   return (
-    <div style={{ padding: '24px' }}>
+    /* FIX 1: Linked to your responsive padding global dashboard-wrapper class */
+    <div className="dashboard-wrapper">
       <div className="ph anim-fadeup">
         <div className="ph-title">Practical Lesson Sharing</div>
         <div className="ph-sub">Select the lesson you want to share live location for.</div>
       </div>
 
-      <div className="card card-p anim-fadeup" style={{ marginTop: '22px', maxWidth: '900px' }}>
+      <div className="card card-p anim-fadeup" style={{ marginTop: '22px', maxWidth: '900px', boxSizing: 'border-box', width: '100%' }}>
         {instructorLessons.length === 0 ? (
           <div style={{ color: 'var(--text3)' }}>
             No practical lessons are assigned to you right now.
@@ -35,11 +36,13 @@ export default function InstructorPracticalLessons({ user, setPage, setActiveLes
             {instructorLessons.map((lesson) => {
               const questionCount = getLessonQuestionCount(lesson.id);
               return (
-                <div key={lesson.id} className="card anim-fadeup" style={{ padding: '16px' }}>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '14px' }}>
-                    <div>
-                      <div style={{ fontWeight: 700, fontSize: '14px' }}>{lesson.date} · {lesson.time}</div>
-                      <div style={{ fontSize: '12px', color: 'var(--text3)', marginTop: '6px' }}>
+                <div key={lesson.id} className="card anim-fadeup" style={{ padding: '16px', boxSizing: 'border-box', width: '100%' }}>
+                  {/* FIX 2: Replaced the rigid inline grid row with a responsive container helper class */}
+                  <div className="responsive-lesson-share-row">
+                    <div style={{ minWidth: 0, flex: 1 }}>
+                      {/* FIX 3: Removed strict wrapping blocks from dates on small screen viewports */}
+                      <div style={{ fontWeight: 700, fontSize: '14px', lineHeight: '1.4' }}>{lesson.date} · {lesson.time}</div>
+                      <div style={{ fontSize: '12px', color: 'var(--text3)', marginTop: '6px', lineHeight: '1.4' }}>
                         {lesson.pickupLocation} · {lesson.vehicleName}
                       </div>
                       <div style={{ marginTop: '10px', fontSize: '12px' }}>
@@ -51,9 +54,9 @@ export default function InstructorPracticalLessons({ user, setPage, setActiveLes
                         </div>
                       )}
                     </div>
+                    
                     <button
-                      className="btn btn-primary btn-sm"
-                      style={{ height: '40px', alignSelf: 'center' }}
+                      className="btn btn-primary btn-sm lesson-review-btn"
                       onClick={() => {
                         setActiveLessonId(lesson.id);
                         setPage('practical-lessons-details');
@@ -68,8 +71,9 @@ export default function InstructorPracticalLessons({ user, setPage, setActiveLes
           </div>
         )}
 
-        <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'flex-end' }}>
-          <button className="btn btn-secondary btn-sm" onClick={() => setPage('inst-dash')}>
+        {/* FIX 4: Ensured button is mobile friendly */}
+        <div className="responsive-back-btn-wrapper">
+          <button className="btn btn-secondary btn-sm back-to-dash-btn" onClick={() => setPage('inst-dash')}>
             Back to Dashboard
           </button>
         </div>

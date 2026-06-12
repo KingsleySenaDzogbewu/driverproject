@@ -19,7 +19,7 @@ export default function ManageSchedule() {
     const createdSession = {
       id: Date.now(),
       title: newSchedule.title,
-      instructor: 'Kofi Mensah', // Logged-in default provider reference
+      instructor: 'Kofi Mensah',
       date: newSchedule.date,
       time: newSchedule.time,
       link: newSchedule.link || 'https://zoom.us',
@@ -36,23 +36,24 @@ export default function ManageSchedule() {
   };
 
   return (
-    <div style={{ padding: '24px' }}>
-      <div className="ph-row ph anim-fadeup" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+    /* FIX 1: Linked to your responsive padding global dashboard-wrapper class */
+    <div className="dashboard-wrapper">
+      {/* FIX 2: Turned header row responsive */}
+      <div className="responsive-header-row anim-fadeup">
         <div>
           <div className="ph-title">Session Schedule</div>
           <div className="ph-sub">Manage your live teaching sessions</div>
         </div>
-        <button className="btn btn-green" onClick={() => setShowAddSchedule(!showAddSchedule)}>
+        <button className="btn btn-green header-action-btn" onClick={() => setShowAddSchedule(!showAddSchedule)}>
           {showAddSchedule ? 'Close Form' : '+ New Session'}
         </button>
       </div>
 
-      {/* Conditional Calendar scheduling dropdown layout form */}
       {showAddSchedule && (
-        <div className="card card-p anim-pop" style={{ marginBottom: '18px', background: 'var(--greenbg)', borderColor: 'var(--greenborder)' }}>
+        <div className="card card-p anim-pop" style={{ marginBottom: '18px', background: 'var(--greenbg)', borderColor: 'var(--greenborder)', boxSizing: 'border-box', width: '100%' }}>
           <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, marginBottom: '16px' }}>Schedule New Session</h3>
-          <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-            <div className="field" style={{ gridColumn: '1 / -1' }}>
+          <div className="grid-2">
+            <div className="field form-full-width">
               <label className="label" style={{ display: 'block', marginBottom: '4px', fontSize: '12px', fontWeight: 'bold' }}>Session title</label>
               <input className="input" style={{ width: '100%' }} value={newSchedule.title} onChange={(e) => handleInputChange('title', e.target.value)} placeholder="e.g. Roundabouts Deep Dive Q&A" />
             </div>
@@ -83,17 +84,18 @@ export default function ManageSchedule() {
         </div>
       )}
 
-      {/* Main output schedules render frame block stack */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+      {/* Main Schedule Listings Stack */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', width: '100%', boxSizing: 'border-box' }}>
         {schedulesList.map((s, i) => (
-          <div key={s.id} className={`card sched-card anim-fadeup d${i + 1}`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-              <div className="sched-icon" style={{ background: s.type === 'zoom' ? 'var(--bluebg)' : 'var(--greenbg)', width: '40px', height: '40px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px' }}>
+          /* FIX 3: Replaced tight dynamic layouts with a unified responsive class assignment */
+          <div key={s.id} className={`card schedule-manage-item anim-fadeup d${i + 1}`}>
+            <div className="schedule-main-content">
+              <div className="sched-icon" style={{ background: s.type === 'zoom' ? 'var(--bluebg)' : 'var(--greenbg)', width: '40px', height: '40px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px', flexShrink: 0 }}>
                 {s.type === 'zoom' ? '📹' : '🎥'}
               </div>
-              <div className="sched-info">
-                <div className="sched-title" style={{ fontWeight: '700', fontSize: '14px' }}>{s.title}</div>
-                <div className="sched-meta" style={{ fontSize: '12px', color: 'var(--text3)', marginTop: '4px', display: 'flex', gap: '12px', alignItems: 'center' }}>
+              <div className="schedule-text-details">
+                <div className="schedule-title-heading">{s.title}</div>
+                <div className="schedule-meta-row">
                   <span>📅 {s.date}</span>
                   <span>🕐 {s.time}</span>
                   <span className={`badge ${s.type === 'zoom' ? 'badge-blue' : 'badge-green'}`} style={{ fontSize: '10px', padding: '2px 6px', borderRadius: '4px' }}>
@@ -102,7 +104,20 @@ export default function ManageSchedule() {
                 </div>
               </div>
             </div>
-            <button className="btn btn-danger btn-sm" onClick={() => handleDeleteSchedule(s.id)}>✕ Cancel</button>
+            
+            {/* FIX 4: Explicit inline style safeguards for the Cancel action trigger element button */}
+            <button 
+              className="btn btn-danger btn-sm schedule-cancel-btn" 
+              style={{ 
+                backgroundColor: '#dc2626', 
+                borderColor: '#dc2626', 
+                color: '#ffffff',
+                padding: '6px 12px'
+              }} 
+              onClick={() => handleDeleteSchedule(s.id)}
+            >
+              ✕ Cancel
+            </button>
           </div>
         ))}
       </div>
