@@ -48,7 +48,7 @@ input,textarea,select{font-family:var(--font-body);outline:none}
 #sidebar::before{content:'';position:absolute;top:-80px;left:-60px;width:260px;height:260px;background:radial-gradient(circle,rgba(37,99,235,.22) 0%,transparent 70%);pointer-events:none}
 #sidebar::after{content:'';position:absolute;bottom:0;right:0;width:180px;height:180px;background:radial-gradient(circle,rgba(124,58,237,.15) 0%,transparent 70%);pointer-events:none}
 #main{flex:1;overflow-y:auto;max-height:100vh;background:var(--bg);position:relative;}
-.page{padding:32px 36px;max-width:1100px;margin:24px auto;animation:fadeUp .38s cubic-bezier(.22,1,.36,1) both;background:var(--surface);border-radius:24px;box-shadow:0 18px 50px rgba(15,23,42,.08);border:1px solid rgba(15,23,42,.06)}
+.page{padding:32px 36px;max-width:1100px;margin:24px auto;animation:fadeUp .38s cubic-bezier(.22,1,.36,1) both;background:var(--surface);border-radius:24px;box-shadow:0 18px 50px rgba(15,23,42,.08);border:1px solid rgba(15,23,42,.06);min-width:0;width:100%;}
 
 /* ── SIDEBAR ── */
 .sb-logo{padding:28px 20px 18px;display:flex;align-items:center;gap:10px;position:relative;z-index:1}
@@ -221,16 +221,48 @@ select.input{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xml
 @media (max-width:768px){
   #sidebar{position:fixed;left:0;top:0;z-index:1000;height:100vh;width:240px;transform:translateX(-100%);transition:transform .3s ease;box-shadow:0 12px 40px rgba(15,23,42,.24)}
   #sidebar.open{transform:translateX(0)}
-  #main{max-height:100vh;width:100%}
+  
+  /* 1. CRITICAL: Allow vertical scrolling and constrain horizontal expansion */
+  #main{
+    max-height: 100vh;
+    width: 100%;
+    overflow-y: auto;   /* Lets the dashboard scroll up/down properly */
+    overflow-x: hidden; /* Prevents hidden horizontal content drift */
+  }
+  
   .hamburger{display:flex}
-  .page{padding:20px 16px;max-width:100%}
+  
+  /* 2. FORCE BOX SIZING: Ensures padding doesn't widen the container */
+  .page{
+    padding:20px 16px;
+    max-width:100%;
+    box-sizing: border-box; 
+  }
+  
   .grid-2{grid-template-columns:1fr}
   .grid-3{grid-template-columns:1fr}
   .grid-4{grid-template-columns:1fr 1fr;gap:12px}
   .ph-title{font-size:20px;margin-bottom:8px}
-  .card-p{padding:16px 18px}
+  
+  /* 3. OPTIMIZED MOBLE PADDING: Reduces the box slightly more for small phones */
+  .card-p{
+    padding: 14px 14px; 
+    box-sizing: border-box;
+  }
+  
   .stat-val{font-size:24px}
+
+  /* 4. GRID OVERRIDE: Keep cards from forcing wider bounds */
+  .responsive-progress-grid,
+  .responsive-progress-grid > div {
+    display: grid;
+    grid-template-columns: 1fr !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
+  }
 }
+
 @media (max-width:640px){
   .grid-4{grid-template-columns:1fr}
   .auth-box{width:90%;max-width:420px;padding:0 16px}
@@ -249,3 +281,101 @@ select.input{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xml
   cursor: pointer;
   text-decoration: underline;
 }
+
+/* Add this to your CSS file */
+.responsive-progress-grid {
+  display: grid;
+  gap: 16px;
+  margin-bottom: 16px;
+  
+  /* Mobile default: 1 single vertical column */
+  grid-template-columns: 1fr; 
+}
+
+/* Desktop override: Switch back to your clean 2-column layout */
+@media (min-width: 768px) {
+  .responsive-progress-grid {
+    grid-template-columns: 2fr 1fr;
+  }
+}
+
+/* Schedule Container Flex Rules */
+.sched-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  gap: 12px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.sched-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0; /* Prevents icon flattening */
+}
+
+/* CRITICAL TEXT BOX WRAP OVERRIDES */
+.sched-info {
+  flex: 1;
+  min-width: 0; /* Lets text contract inside bounds */
+}
+
+.sched-title {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.4;
+  margin-bottom: 4px;
+  color: var(--text1);
+}
+
+.sched-meta {
+  display: flex;
+  flex-wrap: wrap; /* Wraps details cleanly if they lack horizontal room */
+  gap: 8px;
+  font-size: 11px;
+  color: var(--text3);
+}
+
+.meta-item {
+  white-space: nowrap;
+}
+
+/* RIGHT HAND SIDE ACTIONS PANELS */
+.sched-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-end;
+  flex-shrink: 0; /* Guarantees actions stick inside right padding borders */
+}
+
+/* Mobile-first text adjustment for button actions */
+.sched-btn {
+  white-space: nowrap;
+}
+
+/* Media Query Tweaks for larger resolutions */
+@media (max-width: 480px) {
+  .sched-meta {
+    flex-direction: column; /* Stacks author, date, and hour meta vertically if screen is extremely narrow */
+    gap: 2px;
+  }
+}
+
+/* Center all content inside the small progress metrics boxes */
+.responsive-stat-row > div, 
+.responsive-stat-row [class*="stat-card"] {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;   /* Centers elements horizontally */
+  justify-content: center !important;/* Centers elements vertically */
+  text-align: center !important;     /* Centers multi-line labels */
+}
+

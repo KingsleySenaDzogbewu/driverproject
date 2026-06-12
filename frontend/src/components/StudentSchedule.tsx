@@ -3,7 +3,8 @@ import { SCHEDULES } from '../data/mockData';
 
 export default function StudentSchedule() {
   return (
-    <div style={{ padding: '24px' }}>
+    /* Changed to your responsive class name wrapper */
+    <div className="dashboard-wrapper">
       <div className="ph anim-fadeup">
         <div className="ph-title">Upcoming Sessions</div>
         <div className="ph-sub">Live classes and consultations with your instructors</div>
@@ -15,23 +16,27 @@ export default function StudentSchedule() {
             <div className="sched-icon" style={{ background: s.type === 'zoom' ? 'var(--bluebg)' : 'var(--greenbg)' }}>
               {s.type === 'zoom' ? '📹' : '🎥'}
             </div>
+            
             <div className="sched-info">
               <div className="sched-title">{s.title}</div>
               <div className="sched-meta">
-                <span>👤 {s.instructor}</span>
-                <span>📅 {s.date}</span>
-                <span>🕐 {s.time}</span>
+                <span className="meta-item">👤 {s.instructor}</span>
+                <span className="meta-item">📅 {s.date}</span>
+                <span className="meta-item">🕐 {s.time}</span>
               </div>
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'flex-end' }}>
-              <span className="badge ${s.type==='zoom'?'badge-blue':'badge-green'}">
+            
+            {/* Added a responsive actions container wrapper */}
+            <div className="sched-actions">
+              {/* Fixed String Literal Bug: Changed to backticks for accurate interpolation */}
+              <span className={`badge ${s.type === 'zoom' ? 'badge-blue' : 'badge-green'}`}>
                 {s.type === 'zoom' ? 'Zoom' : 'Google Meet'}
               </span>
               <button 
-                className={`btn ${s.type === 'zoom' ? 'btn-primary' : 'btn-green'} btn-sm`} 
+                className={`btn ${s.type === 'zoom' ? 'btn-primary' : 'btn-green'} btn-sm sched-btn`} 
                 onClick={() => window.open(s.link, '_blank')}
               >
-                Join Session
+                Join
               </button>
             </div>
           </div>

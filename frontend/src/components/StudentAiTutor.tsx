@@ -19,7 +19,6 @@ export default function StudentAiTutor() {
     'When should I use hazard lights?',
   ];
 
-  // Automatically scroll down whenever message count changes or loading starts
   useEffect(() => {
     if (chatBodyRef.current) {
       chatBodyRef.current.scrollTop = chatBodyRef.current.scrollHeight;
@@ -33,13 +32,11 @@ export default function StudentAiTutor() {
     const userMsg = { role: 'user', text: input };
     const updatedHistory = [...chatMsgs, userMsg];
     
-    // Instantly show user message and trigger loader
     setChatMsgs(updatedHistory);
     setChatInput('');
     setChatLoading(true);
 
     try {
-        // In this prototype, the AI tutor is simulated locally using built-in driving theory knowledge.
       const reply = await new Promise<string>((resolve) => {
         window.setTimeout(() => resolve(answerTutorQuestion(input)), 300);
       });
@@ -62,23 +59,24 @@ export default function StudentAiTutor() {
   };
 
   return (
-    <div className="anim-fadeup" style={{ height: 'calc(100vh - 100px)', display: 'flex', flexDirection: 'column', padding: '24px' }}>
+    /* FIX 1: Replaced inline padding with your responsive wrapper class */
+    <div className="dashboard-wrapper anim-fadeup" style={{ height: 'calc(100vh - 100px)', display: 'flex', flexDirection: 'column', boxSizing: 'border-box' }}>
       <div className="ph" style={{ flexShrink: 0 }}>
         <div className="ph-title">AI Tutor ✧</div>
         <div className="ph-sub">A simulated tutor using built-in driving theory guidance. Ask about road signs, traffic laws, safety, or vehicle controls.</div>
       </div>
 
-      <div className="card" style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', padding: 0, minHeight: 0 }}>
+      <div className="card" style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', padding: 0, minHeight: 0, width: '100%', boxSizing: 'border-box' }}>
         <div 
           ref={chatBodyRef}
           style={{ flex: 1, overflowY: 'auto', padding: '20px', display: 'flex', flexDirection: 'column', gap: '12px' }}
         >
           {chatMsgs.map((m, idx) => (
-            <div key={idx} className={`chat-msg ${m.role}`} style={{ display: 'flex', gap: '10px', alignSelf: m.role === 'user' ? 'flex-end' : 'flex-start', flexDirection: m.role === 'user' ? 'row-reverse' : 'row' }}>
-              <div className="chat-avatar" style={{ background: m.role === 'ai' ? 'var(--navy)' : 'var(--blue)', width: '32px', height: '32px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '13px' }}>
+            <div key={idx} className={`chat-msg ${m.role}`} style={{ display: 'flex', gap: '10px', alignSelf: m.role === 'user' ? 'flex-end' : 'flex-start', flexDirection: m.role === 'user' ? 'row-reverse' : 'row', maxWidth: '100%' }}>
+              <div className="chat-avatar" style={{ background: m.role === 'ai' ? 'var(--navy)' : 'var(--blue)', width: '32px', height: '32px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '13px', flexShrink: 0 }}>
                 {m.role === 'ai' ? '✧' : '👤'}
               </div>
-              <div className={`chat-bubble ${m.role}`} style={{ whiteSpace: 'pre-line', padding: '10px 14px', borderRadius: '8px', maxWidth: '70%', background: m.role === 'ai' ? 'var(--gray1)' : 'var(--bluebg)', fontSize: '13px', lineHeight: '1.5' }}>
+              <div className={`chat-bubble ${m.role}`} style={{ whiteSpace: 'pre-line', padding: '10px 14px', borderRadius: '8px', maxWidth: '75%', background: m.role === 'ai' ? 'var(--gray1)' : 'var(--bluebg)', fontSize: '13px', lineHeight: '1.5', wordBreak: 'break-word' }}>
                 {m.text}
               </div>
             </div>
@@ -86,7 +84,7 @@ export default function StudentAiTutor() {
 
           {chatLoading && (
             <div className="chat-msg ai" style={{ display: 'flex', gap: '10px' }}>
-              <div className="chat-avatar" style={{ background: 'var(--navy)', width: '32px', height: '32px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '13px' }}>✧</div>
+              <div className="chat-avatar" style={{ background: 'var(--navy)', width: '32px', height: '32px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '13px', flexShrink: 0 }}>✧</div>
               <div className="chat-bubble ai" style={{ display: 'flex', alignItems: 'center', gap: '5px', padding: '12px 18px', borderRadius: '8px', background: 'var(--gray1)' }}>
                 <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#888', animation: 'bounce 1.4s infinite alternate' }}></div>
                 <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#888', animation: 'bounce 1.4s infinite alternate', animationDelay: '0.15s' }}></div>
@@ -97,11 +95,25 @@ export default function StudentAiTutor() {
         </div>
 
         {chatMsgs.length === 1 && (
-          <div style={{ padding: '0 16px 12px' }}>
+          <div style={{ padding: '0 16px 12px', boxSizing: 'border-box', width: '100%' }}>
             <div style={{ fontSize: '11px', color: 'var(--text3)', fontWeight: '600', letterSpacing: '.6px', textTransform: 'uppercase', marginBottom: '8px' }}>Suggested questions</div>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '7px' }}>
+            {/* FIX 2: Modified layout to stack vertically on narrow containers, and forced text layout normalization */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', width: '100%' }}>
               {suggestions.map((s, idx) => (
-                <button key={idx} className="btn btn-secondary btn-sm" onClick={() => handleSendChat(s)} style={{ fontSize: '12px' }}>
+                <button 
+                  key={idx} 
+                  className="btn btn-secondary btn-sm" 
+                  onClick={() => handleSendChat(s)} 
+                  style={{ 
+                    fontSize: '12px', 
+                    whiteSpace: 'normal', 
+                    textAlign: 'left', 
+                    width: '100%', 
+                    height: 'auto', 
+                    padding: '8px 12px',
+                    lineHeight: '1.4'
+                  }}
+                >
                   {s}
                 </button>
               ))}
@@ -109,10 +121,11 @@ export default function StudentAiTutor() {
           </div>
         )}
 
-        <div style={{ padding: '14px 16px', borderTop: '1px solid var(--gray3)', display: 'flex', gap: '10px', flexShrink: 0 }}>
+        {/* FIX 3: Added width controls to safely lock the message control dock */}
+        <div style={{ padding: '14px 16px', borderTop: '1px solid var(--gray3)', display: 'flex', gap: '10px', flexShrink: 0, width: '100%', boxSizing: 'border-box', alignItems: 'center' }}>
           <input 
             className="input" 
-            style={{ flex: 1 }} 
+            style={{ flex: 1, minWidth: 0 }} /* Added minWidth: 0 to allow scaling past text bounds */
             placeholder="Ask a driving theory question…"
             value={chatInput}
             onChange={(e) => setChatInput(e.target.value)}
@@ -120,6 +133,7 @@ export default function StudentAiTutor() {
           />
           <button 
             className="btn btn-primary" 
+            style={{ flexShrink: 0 }} /* Prevents send text compression */
             onClick={() => handleSendChat()} 
             disabled={chatLoading || !chatInput.trim()}
           >

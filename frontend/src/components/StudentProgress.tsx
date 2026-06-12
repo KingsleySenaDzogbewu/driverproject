@@ -23,7 +23,7 @@ export default function StudentProgress({ setActiveLessonId, setPage }) {
   };
 
   return (
-    <div style={{ padding: '24px' }}>
+    <div className="dashboard-wrapper">
       <div className="ph anim-fadeup">
         <div className="ph-title">Progress Dashboard</div>
         <div className="ph-sub">Your licence readiness at a glance</div>
@@ -36,7 +36,7 @@ export default function StudentProgress({ setActiveLessonId, setPage }) {
         <StatCard icon="🎯" label="Licence Readiness" val={`${readiness}%`} color={readiness >= 70 ? 'var(--green)' : readiness >= 50 ? 'var(--amber)' : 'var(--red)'} />
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '3fr 2fr', gap: '16px' }}>
+      <div className="responsive-progress-grid">
         <div>
           {/* Progress by Category Panel */}
           <div className="card card-p anim-fadeup d2" style={{ marginBottom: '16px' }}>
@@ -58,7 +58,9 @@ export default function StudentProgress({ setActiveLessonId, setPage }) {
 
           {/* Lesson Progress Table Matrix */}
           <div className="card anim-fadeup d3" style={{ overflow: 'hidden' }}>
-            <table className="tbl" style={{ width: '100%', borderCollapse: 'collapse' }}>
+             <div style={{ overflowX: 'auto', width: '100%', WebkitOverflowScrolling: 'touch' }}>
+
+              <table className="tbl" style={{ width: '100%', borderCollapse: 'collapse' }}>
               <thead>
                 <tr>
                   <th style={{ textAlign: 'left', padding: '12px' }}>Lesson</th>
@@ -85,6 +87,9 @@ export default function StudentProgress({ setActiveLessonId, setPage }) {
                 ))}
               </tbody>
             </table>
+              
+             </div>
+            
           </div>
         </div>
 

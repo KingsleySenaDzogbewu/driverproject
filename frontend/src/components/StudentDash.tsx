@@ -31,7 +31,7 @@ export default function StudentDash({ user, setPage, setActiveLessonId }: Studen
     <>
       {/* Header Panel */}
       <div className="ph anim-fadeup">
-        <div className="ph-title">Welcome back, {user?.name ? user.name.split(' ')[0] : 'Student'} 👋</div>
+        <div className="ph-title">Welcome back, {user?.name ? user.name.split(' ')[0] : 'Student'} </div>
         <div className="ph-sub">Pick up where you left off on your journey to your driving licence.</div>
       </div>
 
@@ -44,7 +44,7 @@ export default function StudentDash({ user, setPage, setActiveLessonId }: Studen
       </div>
 
       {/* Main Splitting Columns Layout row */}
-      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '16px', marginBottom: '16px' }}>
+      <div className="responsive-progress-grid">
         
         {/* Progress Assessment Cards Wrapper */}
         <div className="card card-p anim-fadeup d2">

@@ -41,7 +41,7 @@ export default function PracticalLessons({ user, setPage, setActiveLessonId }: P
   };
 
   return (
-    <div style={{ padding: '24px' }}>
+     <div className="dashboard-wrapper">
       <div className="ph anim-fadeup">
         <div className="ph-title">Practical Lessons</div>
         <div className="ph-sub">{user.name}, here are your practical driving lessons.</div>
@@ -58,9 +58,10 @@ export default function PracticalLessons({ user, setPage, setActiveLessonId }: P
               No upcoming lessons scheduled.
             </div>
           ) : (
-            <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '16px' }}>
+            /* FIX 1: Applied a fluid grid class instead of rigid inline styles */
+            <div className="responsive-lessons-grid">
               {upcomingLessons.map((lesson: PracticalLesson) => (
-                <div key={lesson.id} className="card anim-fadeup" style={{ padding: '18px', minWidth: '0', width: '100%' }}>
+                <div key={lesson.id} className="card anim-fadeup" style={{ padding: '18px', minWidth: '0', width: '100%', boxSizing: 'border-box' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', gap: '12px', marginBottom: '14px', alignItems: 'center' }}>
                     <div>
                       <div style={{ fontWeight: 700, fontSize: '14px' }}>{lesson.instructorName}</div>
@@ -68,7 +69,6 @@ export default function PracticalLessons({ user, setPage, setActiveLessonId }: P
                     </div>
                     <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                       <span className="badge badge-blue" style={{ fontSize: '11px' }}>{lesson.status}</span>
-                      {/* Instructor proximity status for students */}
                       {user.role === 'student' && (
                         (() => {
                           const st = getInstructorStatus(lesson);
@@ -114,13 +114,14 @@ export default function PracticalLessons({ user, setPage, setActiveLessonId }: P
       </div>
 
       <div style={{ marginTop: '40px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '3fr 3fr', gap: '16px' }}>
+        <div className="responsive-split-footer">
           <div className="card card-p anim-fadeup">
             <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '15px', fontWeight: '700', marginBottom: '12px' }}>Driving Progress</h3>
-            <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginBottom: '12px' }}>
-              <StatCard  label="Practical Lessons Completed" val={`${PRACTICAL_LESSONS.filter(l => l.status === 'completed').length} / ${PRACTICAL_LESSONS.length}`} color="var(--blue)" />
+            
+            <div className="responsive-stat-row">
+              <StatCard label="Practical Lessons Completed" val={`${PRACTICAL_LESSONS.filter(l => l.status === 'completed').length} / ${PRACTICAL_LESSONS.length}`} color="var(--blue)" />
               <StatCard label="Hours Logged" val={`${PRACTICAL_LESSONS.filter(l => l.status === 'completed').reduce((acc, l) => acc + (parseInt(l.duration) || 0), 0)}h`} color="var(--green)" />
-              <StatCard  label="Road readiness" val={`${Math.round((PRACTICAL_LESSONS.filter(l => l.status === 'completed').length / Math.max(1, PRACTICAL_LESSONS.length)) * 100)}%`} color="var(--amber)" />
+              <StatCard label="Road readiness" val={`${Math.round((PRACTICAL_LESSONS.filter(l => l.status === 'completed').length / Math.max(1, PRACTICAL_LESSONS.length)) * 100)}%`} color="var(--amber)" />
             </div>
 
             <div style={{ marginTop: '6px' }}>
@@ -134,11 +135,11 @@ export default function PracticalLessons({ user, setPage, setActiveLessonId }: P
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 {PRACTICAL_LESSONS.filter(l => l.status === 'completed').map((l) => (
                   <div key={l.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 0', borderBottom: '1px solid var(--gray2)' }}>
-                    <div>
-                      <div style={{ fontWeight: 600, fontSize: '13px' }}>{l.instructorName} · {l.vehicleName}</div>
-                      <div style={{ fontSize: '11px', color: 'var(--text3)' }}>{l.date} · {l.time} · {l.duration}</div>
+                    <div style={{ minWidth: 0, flex: 1, marginRight: '8px' }}>
+                      <div style={{ fontWeight: 600, fontSize: '13px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{l.instructorName} · {l.vehicleName}</div>
+                      <div style={{ fontSize: '11px', color: 'var(--text3)' }}>{l.date} · {l.time}</div>
                     </div>
-                    <div style={{ display: 'flex', gap: '8px' }}>
+                    <div style={{ display: 'flex', gap: '8px', flexShrink: 0 }}>
                       <button className="btn btn-ghost btn-sm">View</button>
                     </div>
                   </div>
