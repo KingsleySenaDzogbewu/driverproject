@@ -666,3 +666,85 @@ select.input{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xml
   }
 }
 
+
+/* Core Grid Wrapper for Admin Views */
+.responsive-admin-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr; /* Default: stack components vertically on phone screens */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+   Desktop Adapters (768px and up)
+   ========================================================================== */
+@media (min-width: 768px) {
+  .responsive-admin-grid {
+    grid-template-columns: 3fr 2fr; /* Restores side-by-side alignment grid on PC */
+    gap: 20px;
+  }
+}
+
+/* ==========================================================================
+   Responsive Lesson Item Layout (Applies to Admin & Instructor side)
+   ========================================================================== */
+.lesson-manage-item {
+  display: flex;
+  flex-direction: column; /* Mobile Default: Stack elements cleanly downwards */
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* Container organizing the category icon and text strings */
+.lesson-text-block {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.lesson-title-text {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--text1);
+}
+
+.lesson-sub-text {
+  font-size: 12px;
+  color: var(--text3);
+  margin-top: 2px;
+}
+
+/* Action Group: Pinned to the bottom-right corner area on mobile devices */
+.lesson-actions-block {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  width: 100%;       /* Spans full width on mobile to right-align actions */
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+
+
+/* ==========================================================================
+   Desktop Upgrades (Screens 768px and up)
+   ========================================================================== */
+@media (min-width: 768px) {
+  .lesson-manage-item {
+    flex-direction: row; /* PC View: Line them up side-by-side horizontally */
+    align-items: center;
+    padding: 16px 20px;
+    gap: 14px;
+  }
+
+  .lesson-actions-block {
+    width: auto; /* Restores tight sizing box constraints for larger monitors */
+    margin-top: 0;
+  }
+}

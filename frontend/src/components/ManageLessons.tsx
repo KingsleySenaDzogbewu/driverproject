@@ -11,6 +11,7 @@ interface ManageLessonsProps {
 
 export default function ManageLessons({ setPage, setActiveLessonId, role }: ManageLessonsProps) {
   const isInstructorView = role === 'instructor';
+  const canAddLessons = isInstructorView;
 
   const [lessons, setLessons] = useState(INITIAL_LESSONS);
   const [showAddLesson, setShowAddLesson] = useState(false);
@@ -59,9 +60,11 @@ export default function ManageLessons({ setPage, setActiveLessonId, role }: Mana
           <div className="ph-title">Manage Lessons</div>
           <div className="ph-sub">{lessons.length} lessons published</div>
         </div>
-        <button className="btn btn-primary header-action-btn" onClick={() => setShowAddLesson(!showAddLesson)}>
-          {showAddLesson ? 'Close Form' : '+ Add Lesson'}
-        </button>
+        {canAddLessons && (
+          <button className="btn btn-primary header-action-btn" onClick={() => setShowAddLesson(!showAddLesson)}>
+            {showAddLesson ? 'Close Form' : '+ Add Lesson'}
+          </button>
+        )}
       </div>
 
       {isInstructorView && (
@@ -105,7 +108,7 @@ export default function ManageLessons({ setPage, setActiveLessonId, role }: Mana
         </div>
       )}
 
-      {showAddLesson && (
+      {canAddLessons && showAddLesson && (
         <div className="card card-p anim-pop" style={{ marginBottom: '18px', background: 'var(--bluebg)', borderColor: '#bfdbfe', boxSizing: 'border-box', width: '100%' }}>
           <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, marginBottom: '16px' }}>New Lesson</h3>
           <div className="grid-2">
