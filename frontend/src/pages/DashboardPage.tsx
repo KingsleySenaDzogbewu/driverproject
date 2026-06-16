@@ -13,6 +13,7 @@ import ManageLessons from '../components/ManageLessons';
 import ManageQuizzes from '../components/ManageQuizzes';
 import ManageSchedule from '../components/ManageSchedule';
 import AdminDash from '../components/AdminDash';
+import AdminUsers from '../components/AdminUsers';
 import AdminAuditLog from '../components/AdminAuditLog';
 import PracticalLessons from '../components/PracticalLessons';
 import PracticalLessonsDetails from '../components/PracticalLessonsDetails';
@@ -121,7 +122,7 @@ export default function DashboardPage({ user, onLogout }: DashboardPageProps) {
       case 'admin-dash':     
         return <AdminDash setPage={setPage} />;
       case 'admin-users':    
-        return <AdminDash setPage={setPage} />; 
+        return <AdminUsers setPage={setPage} />;
 
       case 'admin-content':  
         return <ManageLessons />; 

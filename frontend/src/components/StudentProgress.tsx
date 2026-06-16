@@ -31,9 +31,9 @@ export default function StudentProgress({ setActiveLessonId, setPage }) {
 
       {/* Grid Analytics Row */}
       <div className="grid-3 anim-fadeup d1" style={{ marginBottom: '20px' }}>
-        <StatCard icon="📚" label="Lessons Completed" val={`${done} / ${INITIAL_LESSONS.length}`} color="var(--blue)" />
-        <StatCard icon="🧠" label="Quiz Average" val="78%" color="var(--green)" />
-        <StatCard icon="🎯" label="Licence Readiness" val={`${readiness}%`} color={readiness >= 70 ? 'var(--green)' : readiness >= 50 ? 'var(--amber)' : 'var(--red)'} />
+        <StatCard  label="Lessons Completed" val={`${done} / ${INITIAL_LESSONS.length}`} color="var(--blue)" />
+        <StatCard  label="Quiz Average" val="78%" color="var(--green)" />
+        <StatCard  label="Licence Readiness" val={`${readiness}%`} color={readiness >= 70 ? 'var(--green)' : readiness >= 50 ? 'var(--amber)' : 'var(--red)'} />
       </div>
 
       <div className="responsive-progress-grid">
