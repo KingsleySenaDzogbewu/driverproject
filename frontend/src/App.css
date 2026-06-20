@@ -748,3 +748,47 @@ select.input{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xml
     margin-top: 0;
   }
 }
+
+
+/* ── PREMIUM HUMANLIKE MICRO-INTERACTIONS ── */
+
+/* 1. Make the Sign-In button feel tactile when you hover or click it */
+#auth-screen button[type="submit"], 
+.auth-submit {
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+#auth-screen button[type="submit"]:hover, 
+.auth-submit:hover {
+  filter: brightness(1.15); /* Subtle glow increase */
+  transform: translateY(-2px); /* Gentle liftoff */
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.4); /* Smooth neon shadow expansion */
+}
+
+#auth-screen button[type="submit"]:active, 
+.auth-submit:active {
+  transform: translateY(1px) scale(0.98); /* Tactile physical click feel */
+}
+
+/* 2. Make the bottom registration link react smoothly */
+.auth-link, 
+#auth-screen a,
+#auth-screen footer button {
+  transition: color 0.2s ease, text-shadow 0.2s ease !important;
+}
+
+.auth-link:hover, 
+#auth-screen a:hover {
+  color: #ffffff !important;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.6); /* Soft humanlike text glow */
+}
+
+/* 3. Smooth focus transition for inputs */
+#auth-screen input {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease !important;
+}
+#auth-screen input:focus {
+  border-color: var(--blue2);
+  background-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 8px rgba(37, 99, 235, 0.4); /* Subtle glowing focus effect */
+}
