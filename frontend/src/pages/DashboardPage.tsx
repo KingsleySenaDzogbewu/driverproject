@@ -18,7 +18,7 @@ import AdminAuditLog from '../components/AdminAuditLog';
 import PracticalLessons from '../components/PracticalLessons';
 import PracticalLessonsDetails from '../components/PracticalLessonsDetails';
 
-// 1. Defines all the allowed sub-page routes across your system dashboard hubs
+// 1. Defines all the allowed sub-page routes across the system dashboard hubs
 export type DashboardSubPage = 
 
   | 'dashboard' | 'lessons' | 'lesson-player' | 'quiz' | 'progress' | 'schedule' | 'practical-lessons' | 'practical-lessons-details' | 'ai-tutor'
