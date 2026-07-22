@@ -17,7 +17,7 @@ export default function App() {
   const [user, setUser] = useState<UserProfile | null>(null); // Can be a UserProfile object OR null
   const [page, setPage] = useState<AppPage>('auth');          // Can ONLY be 'auth' or 'dashboard'
 
-  // Enforce that userData MUST match the backend's UserProfile contract
+  // Enforces that the userData MUST match the backend's UserProfile contract
   const handleLogin = (userData: UserProfile) => {
     setUser(userData);
     setPage('dashboard');
